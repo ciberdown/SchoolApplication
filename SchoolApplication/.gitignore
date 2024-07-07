@@ -1,0 +1,8 @@
+/bin/
+/obj/
+Process.cs
+.vscode
+.fake
+
+
+.env
