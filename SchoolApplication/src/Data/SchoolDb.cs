@@ -21,7 +21,7 @@ namespace SchoolApplication.src.Data
                 .HasKey(sc => new { sc.StudentId, sc.CourseId });
             builder.Entity<StudentCourse>()
                 .HasOne(s => s.Course)
-                .WithMany(c => c.StudentCourses)
+                .WithMany(c => c.EnrolledStudents)
                 .HasForeignKey(s => s.CourseId)
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Entity<StudentCourse>()

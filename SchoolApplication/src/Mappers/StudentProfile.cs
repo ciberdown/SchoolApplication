@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Models;
+using Sprache;
 
 namespace SchoolApplication.src.Mappers
 {
@@ -15,6 +17,13 @@ namespace SchoolApplication.src.Mappers
             CreateMap<School, NoRelationSchoolDto>();
             CreateMap<Course, CourseWithoutScDto>();
             CreateMap<Course, NoRelationCourseDto>();
+            CreateMap<CreateStudentInput, Student>();
+            CreateMap<Student, NoRelationStudentDto>();
+            
+
+            CreateMap<List<Student>, StudentResDto>()
+                .ForMember("TotalCount", opt => opt.MapFrom(src => src.Count))
+                .ForMember("Items", opt => opt.MapFrom(src => src));
         }
     }
 }

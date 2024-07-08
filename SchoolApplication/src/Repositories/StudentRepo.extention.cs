@@ -7,7 +7,6 @@ namespace SchoolApplication.src.Repositories
     {
         public StudentRepo(SchoolDb context) : base(context)
         {
-            
         }
     }
 }

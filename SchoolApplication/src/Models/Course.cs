@@ -7,7 +7,7 @@ namespace SchoolApplication.src.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
-        public List<StudentCourse> StudentCourses { get; set; } = null!;
+        public List<StudentCourse> EnrolledStudents { get; set; } = null!;
 
         [Required]
         public int SchoolId { get; set; }
