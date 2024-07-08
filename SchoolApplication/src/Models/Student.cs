@@ -8,7 +8,7 @@ namespace SchoolApplication.src.Models
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
         
-        public List<StudentCourse>? StudentCourses { get; set; }
+        public List<StudentCourse>? Courses { get; set; }
         
         public Scholarship? Scholarship { get; set; }
 

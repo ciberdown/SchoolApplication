@@ -8,6 +8,6 @@ namespace SchoolApplication.src.Dtos.Student
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
-        public NoRelationSchoolDto School { get; set; } = null!;
+        public NoRelationSchoolDto EventPlaceSchool { get; set; } = null!;
     }
 }

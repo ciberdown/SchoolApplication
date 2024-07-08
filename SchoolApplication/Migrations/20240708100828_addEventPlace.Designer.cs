@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolApplication.src.Data;
 
@@ -11,9 +12,11 @@ using SchoolApplication.src.Data;
 namespace SchoolApplication.Migrations
 {
     [DbContext(typeof(SchoolDb))]
-    partial class SchoolDbModelSnapshot : ModelSnapshot
+    [Migration("20240708100828_addEventPlace")]
+    partial class addEventPlace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,7 +187,7 @@ namespace SchoolApplication.Migrations
                         .IsRequired();
 
                     b.HasOne("SchoolApplication.src.Models.Student", "Student")
-                        .WithMany("Courses")
+                        .WithMany("StudentCourses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -210,9 +213,9 @@ namespace SchoolApplication.Migrations
 
             modelBuilder.Entity("SchoolApplication.src.Models.Student", b =>
                 {
-                    b.Navigation("Courses");
-
                     b.Navigation("Scholarship");
+
+                    b.Navigation("StudentCourses");
                 });
 #pragma warning restore 612, 618
         }

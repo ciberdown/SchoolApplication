@@ -26,12 +26,12 @@ namespace SchoolApplication.src.Data
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Entity<StudentCourse>()
                 .HasOne(s => s.Student)
-                .WithMany(c => c.StudentCourses)
+                .WithMany(c => c.Courses)
                 .HasForeignKey(s => s.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Course>()
-                .HasOne(c => c.School)
+                .HasOne(c => c.EventPlaceSchool)
                 .WithMany(s => s.Courses)
                 .HasForeignKey(c => c.SchoolId)
                 .OnDelete(DeleteBehavior.Cascade);

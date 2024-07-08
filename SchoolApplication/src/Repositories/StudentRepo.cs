@@ -17,7 +17,7 @@ namespace SchoolApplication.src.Repositories
         public async Task<List<Student>> Get()
         {
             return await _context.Students
-                .Include(s => s.StudentCourses)
+                .Include(s => s.Courses)
                 .ThenInclude(sc => sc.Course)
                 .Include(s => s.School)
                 .Include(s => s.Scholarship)

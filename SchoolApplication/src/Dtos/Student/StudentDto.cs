@@ -9,7 +9,7 @@ namespace SchoolApplication.src.Dtos.Student
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
 
-        public List<SCWithoutStudentDto>? StudentCourses { get; set; }
+        public List<SCWithoutStudentDto>? Courses { get; set; }
 
         public NoRelationScholarshipDto? Scholarship { get; set; }
 

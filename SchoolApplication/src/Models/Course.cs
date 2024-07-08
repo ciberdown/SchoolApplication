@@ -11,6 +11,6 @@ namespace SchoolApplication.src.Models
 
         [Required]
         public int SchoolId { get; set; }
-        public School School { get; set; } = null!;
+        public School EventPlaceSchool { get; set; } = null!;
     }
 }
