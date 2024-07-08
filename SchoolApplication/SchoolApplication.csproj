@@ -23,9 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\Controllers\" />
     <Folder Include="src\Helpers\" />
-    <Folder Include="src\Services\" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using SchoolApplication.src.Models;
 
 namespace SchoolApplication.src.Repositories
 {
-    public class StudentRepoBase : IStudentRepo
+    public abstract class StudentRepoBase : IStudentRepo
     {
         protected SchoolDb _context {  get; set; }
 
@@ -18,6 +18,7 @@ namespace SchoolApplication.src.Repositories
         {
             return await _context.Students
                 .Include(s => s.StudentCourses)
+                .ThenInclude(sc => sc.Course)
                 .Include(s => s.School)
                 .Include(s => s.Scholarship)
                 .ToListAsync();

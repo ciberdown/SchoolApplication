@@ -3,10 +3,15 @@ using SchoolApplication.src.Data;
 using DotNetEnv;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Repositories;
+using SchoolApplication.src.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//inject services
+builder.Services.AddScoped<IStudentRepo, StudentRepo>();
+builder.Services.AddScoped<IStudentAppService, StudentAppService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,8 +30,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
-//inject services
-builder.Services.AddScoped<IStudentRepo, StudentRepo>();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

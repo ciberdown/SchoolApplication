@@ -32,7 +32,6 @@ namespace SchoolApplication.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Grade = table.Column<int>(type: "int", nullable: false),
                     SchoolId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -71,21 +70,23 @@ namespace SchoolApplication.Migrations
                 name: "Scholarships",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    AimSchoolId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Scholarships", x => x.Id);
+                    table.PrimaryKey("PK_Scholarships", x => new { x.StudentId, x.AimSchoolId });
+                    table.ForeignKey(
+                        name: "FK_Scholarships_Schools_AimSchoolId",
+                        column: x => x.AimSchoolId,
+                        principalTable: "Schools",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Scholarships_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -94,7 +95,7 @@ namespace SchoolApplication.Migrations
                 {
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    Grade = table.Column<int>(type: "int", nullable: false)
+                    Grade = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,6 +122,11 @@ namespace SchoolApplication.Migrations
                 name: "IX_Course_SchoolId",
                 table: "Course",
                 column: "SchoolId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scholarships_AimSchoolId",
+                table: "Scholarships",
+                column: "AimSchoolId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Scholarships_StudentId",

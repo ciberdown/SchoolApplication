@@ -52,23 +52,18 @@ namespace SchoolApplication.Migrations
 
             modelBuilder.Entity("SchoolApplication.src.Models.Scholarship", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("AimSchoolId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("SchoolName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("StudentId", "AimSchoolId");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasIndex("AimSchoolId");
 
                     b.HasIndex("StudentId")
                         .IsUnique();
@@ -152,11 +147,19 @@ namespace SchoolApplication.Migrations
 
             modelBuilder.Entity("SchoolApplication.src.Models.Scholarship", b =>
                 {
+                    b.HasOne("SchoolApplication.src.Models.School", "School")
+                        .WithMany("TakedScholarships")
+                        .HasForeignKey("AimSchoolId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SchoolApplication.src.Models.Student", "Student")
                         .WithOne("Scholarship")
                         .HasForeignKey("SchoolApplication.src.Models.Scholarship", "StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("School");
 
                     b.Navigation("Student");
                 });
@@ -201,6 +204,8 @@ namespace SchoolApplication.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("Students");
+
+                    b.Navigation("TakedScholarships");
                 });
 
             modelBuilder.Entity("SchoolApplication.src.Models.Student", b =>

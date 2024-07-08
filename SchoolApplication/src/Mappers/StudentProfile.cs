@@ -9,10 +9,12 @@ namespace SchoolApplication.src.Mappers
         public StudentProfile()
         {
             CreateMap<Student, StudentDto>();
-            CreateMap<StudentCourse, SCInStudentDto>();
-            CreateMap<Scholarship, ScholarshipInStudentDto>();
-            CreateMap<School, SchoolInStudentDto>();
-
+            CreateMap<StudentCourse, SCWithoutStudentDto>();
+            CreateMap<Scholarship, NoRelationScholarshipDto>();
+            CreateMap<School, SchoolWithoutStudentDto>();
+            CreateMap<School, NoRelationSchoolDto>();
+            CreateMap<Course, CourseWithoutScDto>();
+            CreateMap<Course, NoRelationCourseDto>();
         }
     }
 }

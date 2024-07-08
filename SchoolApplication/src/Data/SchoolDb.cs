@@ -40,18 +40,23 @@ namespace SchoolApplication.src.Data
                 .IsUnique();
 
             builder.Entity<Scholarship>()
-                .HasOne(s => s.Student)
+                .HasKey(ss => new { ss.StudentId, ss.AimSchoolId });
+            builder.Entity<Scholarship>()
+                .HasOne(ss => ss.Student)
                 .WithOne(s => s.Scholarship)
                 .HasForeignKey<Scholarship>(s => s.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Scholarship>()
+                .HasOne(ss => ss.School)
+                .WithMany(s => s.TakedScholarships)
+                .HasForeignKey(ss => ss.AimSchoolId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             builder.Entity<Student>()
                 .HasOne(s => s.School)
                 .WithMany(s => s.Students)
                 .HasForeignKey(s => s.SchoolId);
-
-
-
 
         }
 
