@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
@@ -46,5 +47,16 @@ namespace SchoolApplication.src.Repositories
             return input;
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            var res = await _context.Students.FindAsync(id);
+            if(res == null)
+                return false;
+            
+            _context.Students.Remove(res);
+            await _context.SaveChangesAsync();
+            
+            return true;
+        }
     }
 }

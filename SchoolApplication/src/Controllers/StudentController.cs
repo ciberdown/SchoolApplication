@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
@@ -44,6 +45,15 @@ namespace SchoolApplication.src.Controllers
                 return null;
             }
             return await GetById(student.Id);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var res = await _service.Delete(id);
+            if(res == true)
+                return NoContent();
+            return BadRequest();
         }
     }
 }

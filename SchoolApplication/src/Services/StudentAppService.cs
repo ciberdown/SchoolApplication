@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
@@ -14,6 +15,12 @@ namespace SchoolApplication.src.Services
         {
             _repo = repo;
             _mapper = mapper;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var res = await _repo.Delete(id);
+            return res;
         }
 
         public async Task<StudentResDto> Get()
