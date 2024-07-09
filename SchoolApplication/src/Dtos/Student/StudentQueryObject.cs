@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SchoolApplication.src.Dtos.Student
 {
-    public class StudentQueryObject
+    public class StudentQueryObject : PaginationQueryObject
     {
         public int? Id { get; set; }
         [MaxLength(StudentConsts.Name.MaxLen)]

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
+using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Models;
@@ -24,6 +25,7 @@ namespace SchoolApplication.src.Repositories
                .Include(s => s.Scholarship).AsQueryable();
 
             res = ApplyFilters(res, query);
+            res = AddPagination(res, query);
 
             return await res.ToListAsync();
 
@@ -75,5 +77,13 @@ namespace SchoolApplication.src.Repositories
 
             return res;
         }
+
+
+        protected IQueryable<T> AddPagination<T>(IQueryable<T> res, PaginationQueryObject query)
+        {
+            res = res.Skip(query.SkipCount!.Value).Take(query.MaxResultCount!.Value);
+            return res;
+        }
+
     }
 }
