@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using SchoolApplication.src.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
 
@@ -17,9 +15,9 @@ namespace SchoolApplication.src.Controllers
         }
 
         [HttpGet]
-        public async Task<StudentResDto> Get()
+        public async Task<StudentResDto> Get([FromQuery] StudentQueryObject query)
         {
-            var students = await _service.Get();
+            var students = await _service.Get(query);
             return students;
         }
 

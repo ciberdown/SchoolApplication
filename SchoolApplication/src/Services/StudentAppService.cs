@@ -23,9 +23,9 @@ namespace SchoolApplication.src.Services
             return res;
         }
 
-        public async Task<StudentResDto> Get()
+        public async Task<StudentResDto> Get(StudentQueryObject query)
         {
-            var students = await _repo.Get();
+            var students = await _repo.Get(query);
             //var res = _mapper.Map<List<StudentDto>>(students);
             var sdrRes = _mapper.Map<StudentResDto>(students);
             return sdrRes;

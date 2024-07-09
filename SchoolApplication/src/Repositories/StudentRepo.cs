@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
@@ -16,14 +15,18 @@ namespace SchoolApplication.src.Repositories
             _context = context;
         }
 
-        public async Task<List<Student>> Get()
+        public async Task<List<Student>> Get(StudentQueryObject query)
         {
-            return await _context.Students
-                .Include(s => s.Courses)
-                .ThenInclude(sc => sc.Course)
-                .Include(s => s.School)
-                .Include(s => s.Scholarship)
-                .ToListAsync();
+            IQueryable<Student> res = _context.Students
+               .Include(s => s.Courses)
+               .ThenInclude(sc => sc.Course)
+               .Include(s => s.School)
+               .Include(s => s.Scholarship).AsQueryable();
+
+            res = ApplyFilters(res, query);
+
+            return await res.ToListAsync();
+
         }
 
         public async Task<Student?> GetById(int id)
@@ -57,6 +60,20 @@ namespace SchoolApplication.src.Repositories
             await _context.SaveChangesAsync();
             
             return true;
+        }
+
+        protected IQueryable<Student> ApplyFilters(IQueryable<Student> res, StudentQueryObject query)
+        {
+            if (!string.IsNullOrWhiteSpace(query.Name))
+                res = res.Where(s => s.Name.Contains(query.Name!));
+            if (query.Id.HasValue)
+                res = res.Where(s => s.Id == query.Id);
+            if (query.SchoolId.HasValue)
+                res = res.Where(s => s.School.Id == query.SchoolId);
+            if (!string.IsNullOrWhiteSpace(query.Description))
+                res.Where(s => s.Description.Contains(query.Description!));
+
+            return res;
         }
     }
 }
