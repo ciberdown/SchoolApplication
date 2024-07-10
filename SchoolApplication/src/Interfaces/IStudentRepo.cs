@@ -6,7 +6,7 @@ namespace SchoolApplication.src.Interfaces
 {
     public interface IStudentRepo
     {
-        public Task<List<Student>> Get(StudentQueryObject query);
+        public IQueryable<Student> Get(StudentQueryObject query);
         public Task<Student?> GetById(int id);
         public Task<Student?> Create(Student input);
         public Task<bool> Delete(int id);

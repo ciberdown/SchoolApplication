@@ -19,11 +19,6 @@ namespace SchoolApplication.src.Mappers
             CreateMap<Course, NoRelationCourseDto>();
             CreateMap<CreateStudentInput, Student>();
             CreateMap<Student, NoRelationStudentDto>();
-            
-
-            CreateMap<List<Student>, StudentResDto>()
-                .ForMember("TotalCount", opt => opt.MapFrom(src => src.Count))
-                .ForMember("Items", opt => opt.MapFrom(src => src));
         }
     }
 }

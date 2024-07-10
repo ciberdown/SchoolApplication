@@ -1,4 +1,5 @@
-﻿using SchoolApplication.src.Data;
+﻿using AutoMapper;
+using SchoolApplication.src.Data;
 using SchoolApplication.src.Interfaces;
 
 namespace SchoolApplication.src.Repositories

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Student;
@@ -16,18 +17,18 @@ namespace SchoolApplication.src.Repositories
             _context = context;
         }
 
-        public async Task<List<Student>> Get(StudentQueryObject query)
+        public IQueryable<Student> Get(StudentQueryObject paginationObjectQuery)
         {
             IQueryable<Student> res = _context.Students
                .Include(s => s.Courses)
                .ThenInclude(sc => sc.Course)
                .Include(s => s.School)
                .Include(s => s.Scholarship).AsQueryable();
+       
+            //apply filters
+            res = ApplyFilters(res, paginationObjectQuery);
 
-            res = ApplyFilters(res, query);
-            res = AddPagination(res, query);
-
-            return await res.ToListAsync();
+            return res;
 
         }
 
@@ -79,11 +80,7 @@ namespace SchoolApplication.src.Repositories
         }
 
 
-        protected IQueryable<T> AddPagination<T>(IQueryable<T> res, PaginationQueryObject query)
-        {
-            res = res.Skip(query.SkipCount!.Value).Take(query.MaxResultCount!.Value);
-            return res;
-        }
+
 
     }
 }

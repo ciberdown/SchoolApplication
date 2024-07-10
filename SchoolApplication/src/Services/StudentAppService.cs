@@ -25,10 +25,21 @@ namespace SchoolApplication.src.Services
 
         public async Task<StudentResDto> Get(StudentQueryObject query)
         {
-            var students = await _repo.Get(query);
-            //var res = _mapper.Map<List<StudentDto>>(students);
-            var sdrRes = _mapper.Map<StudentResDto>(students);
-            return sdrRes;
+            IQueryable<Student> res = _repo.Get(query);
+            //get all items count before apply pagination
+            int count = await GetCountAsync(res);
+
+            //then get filtered items paged list
+            var pagedStudents = await GetPagedStudentsAsync(res, query);
+
+            var studentResDto = new StudentResDto
+            {
+                TotalCount = count,
+                Items = _mapper.Map<List<StudentDto>>(pagedStudents)
+            };
+
+            //return standard res
+            return studentResDto;
         }
 
         public async Task<StudentDto?> GetById(int id)
@@ -48,6 +59,17 @@ namespace SchoolApplication.src.Services
             var student = await _repo.Create(newStudent);
             var studentDto = _mapper.Map<StudentDto>(student);
             return studentDto;
+        }
+
+
+        protected async Task<int> GetCountAsync(IQueryable<Student> query)
+        {
+            return await query.GetCountAsync();
+        }
+
+        protected async Task<List<Student>> GetPagedStudentsAsync(IQueryable<Student> query, PaginationQueryObject paginationQueryObject)
+        {
+            return await query.GetPagedAsync(paginationQueryObject);
         }
     }
 }
