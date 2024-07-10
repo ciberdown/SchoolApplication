@@ -23,7 +23,8 @@ namespace SchoolApplication.src.Repositories
                .Include(s => s.Courses)
                .ThenInclude(sc => sc.Course)
                .Include(s => s.School)
-               .Include(s => s.Scholarship).AsQueryable();
+               .Include(s => s.Scholarship)
+               .AsQueryable();
        
             //apply filters
             res = ApplyFilters(res, paginationObjectQuery);
