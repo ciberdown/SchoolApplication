@@ -74,7 +74,9 @@ namespace SchoolApplication.src.Repositories
             if (query.SchoolId.HasValue)
                 res = res.Where(s => s.School.Id == query.SchoolId);
             if (!string.IsNullOrWhiteSpace(query.Description))
-                res.Where(s => s.Description.Contains(query.Description!));
+                res = res.Where(s => s.Description != null && 
+                            s.Description.Contains(query.Description!
+                          ));
 
             return res;
         }

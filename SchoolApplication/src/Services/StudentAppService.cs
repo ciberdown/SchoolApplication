@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
