@@ -29,9 +29,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 //Add DbContext
-var connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
+const string connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
+const string azureConnectionStirng =
+    "Server=localhost;Database=SchoolDb;User Id=SA;Password=Amin389278200;TrustServerCertificate=True;Encrypt=False;";
 builder.Services.AddDbContext<SchoolDb>(options => {
-        options.UseSqlServer(connectionString);
+        options.UseSqlServer(azureConnectionStirng);
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
