@@ -4,9 +4,9 @@ using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Models;
 
-namespace SchoolApplication.src.Services
+namespace SchoolApplication.src.Services.StudentAppService
 {
-    public abstract class StudentAppServiceBase : IStudentAppService
+    public abstract partial class StudentAppServiceBase : IStudentAppService
     {
         private IStudentRepo _repo;
         private IMapper _mapper;
@@ -61,14 +61,5 @@ namespace SchoolApplication.src.Services
         }
 
 
-        protected async Task<int> GetCountAsync(IQueryable<Student> query)
-        {
-            return await query.GetCountAsync();
-        }
-
-        protected async Task<List<Student>> GetPagedStudentsAsync(IQueryable<Student> query, PaginationQueryObject paginationQueryObject)
-        {
-            return await query.GetPagedAsync(paginationQueryObject);
-        }
     }
 }

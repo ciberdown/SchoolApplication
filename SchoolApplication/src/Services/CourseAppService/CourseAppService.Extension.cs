@@ -6,13 +6,13 @@ using AutoMapper;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Interfaces;
 
-namespace SchoolApplication.src.Services
+namespace SchoolApplication.src.Services.CourseAppService
 {
     public class CourseAppService : CourseAppServiceBase, ICourseAppService
     {
         public CourseAppService(ICourseRepo repo, IMapper mapper) : base(repo, mapper)
         {
-            
+
         }
     }
 }

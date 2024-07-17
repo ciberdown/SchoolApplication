@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Interfaces;
-using SchoolApplication.src.Repositories;
-using SchoolApplication.src.Services;
+using SchoolApplication.src.Repositories.CourseRepo;
+using SchoolApplication.src.Repositories.StudentRepo;
+using SchoolApplication.src.Services.CourseAppService;
+using SchoolApplication.src.Services.StudentAppService;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -4,9 +4,9 @@ using SchoolApplication.src.Dtos.Course;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Models;
 
-namespace SchoolApplication.src.Services
+namespace SchoolApplication.src.Services.CourseAppService
 {
-    public abstract class CourseAppServiceBase : ICourseAppService
+    public abstract partial class CourseAppServiceBase : ICourseAppService
     {
         public ICourseRepo _repo { get; set; }
         public IMapper _mapper { get; set; }
@@ -63,18 +63,6 @@ namespace SchoolApplication.src.Services
             CourseDto createdCourseDto = _mapper.Map<CourseDto>(created);
             return createdCourseDto;
         }
-
-
-        protected async Task<int> GetCountAsync(IQueryable<Course> query)
-        {
-            return await query.GetCountAsync();
-        }
-
-        protected async Task<List<Course>> GetPagedStudentsAsync(IQueryable<Course> query, PaginationQueryObject paginationQueryObject)
-        {
-            return await query.GetPagedAsync(paginationQueryObject);
-        }
-
 
     }
 }
