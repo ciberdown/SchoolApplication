@@ -17,6 +17,10 @@ namespace SchoolApplication.src.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<School>()
+                .HasIndex(sc => sc.Name)
+                .IsUnique(true);
+
             builder.Entity<StudentCourse>()
                 .HasKey(sc => new { sc.StudentId, sc.CourseId });
             builder.Entity<StudentCourse>()
@@ -57,6 +61,8 @@ namespace SchoolApplication.src.Data
                 .HasOne(s => s.School)
                 .WithMany(s => s.Students)
                 .HasForeignKey(s => s.SchoolId);
+
+
 
         }
 

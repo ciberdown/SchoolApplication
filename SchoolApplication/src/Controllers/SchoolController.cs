@@ -13,24 +13,47 @@ namespace SchoolApplication.src.Controllers
         private readonly ISchoolAppService _service = service;
 
         [HttpGet]
-        public async Task<SchoolResDto> Get([FromQuery] SchoolQueryObject query)
+        public async Task<ActionResult<SchoolResDto>> Get([FromQuery] SchoolQueryObject query)
         {
             var res = await _service.Get(query);
-            return res;
+            return Ok(res);
         }
 
         [HttpGet("{id}")]
-        public async Task<SchoolDto> GetById(int id)
+        public async Task<ActionResult<SchoolDto>> GetById(int id)
         {
             var school = await _service.GetById(id);
             if (school == null)
             {
                 //implement not found
-                return null;
+                return NotFound();
             }
-            return school;
+            return Ok(school);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<SchoolDto>> Create([FromBody] CreateSchoolInput input)
+        {
+            try
+            {
+                SchoolDto? createdSchool = await _service.Create(input);
+                if (createdSchool == null)
+                    return BadRequest();
+                return Ok(createdSchool);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool res = await _service.Delete(id);
+            if (res == false)
+                return NotFound();
+            return NoContent();
+        }
     }
 }

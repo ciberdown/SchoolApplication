@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Dtos.School;
 using SchoolApplication.src.Interfaces;
@@ -36,6 +38,31 @@ namespace SchoolApplication.src.Repositories.SchoolRepo
                 .Include(s => s.Courses)
                 .Include(s => s.TakedScholarships)
                 .FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public async Task<School?> Create(School school)
+        {
+            School? foundedSchool = await _context.Schools.FirstOrDefaultAsync(sc => sc.Name == school.Name);
+            //there is an school with this name
+            if (foundedSchool != null)
+                throw new Exception("there is an school with this name");
+            var res = await _context.Schools.AddAsync(school);
+            if(res == null)
+                return null;
+            await _context.SaveChangesAsync();
+            return school;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var res = await _context.Schools.FindAsync(id);
+            if (res == null)
+                return false;
+
+            _context.Schools.Remove(res);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

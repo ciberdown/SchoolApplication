@@ -1,4 +1,5 @@
-﻿using SchoolApplication.src.Dtos.School;
+﻿using Microsoft.AspNetCore.Mvc;
+using SchoolApplication.src.Dtos.School;
 
 namespace SchoolApplication.src.Interfaces
 {
@@ -7,5 +8,7 @@ namespace SchoolApplication.src.Interfaces
         public Task<SchoolResDto> Get(SchoolQueryObject query);
 
         public Task<SchoolDto?> GetById(int id);
+        public Task<SchoolDto?> Create(CreateSchoolInput input);
+        public Task<bool> Delete(int id);
     }
 }

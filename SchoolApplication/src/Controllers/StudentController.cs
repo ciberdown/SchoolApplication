@@ -15,26 +15,26 @@ namespace SchoolApplication.src.Controllers
         }
 
         [HttpGet]
-        public async Task<StudentResDto> Get([FromQuery] StudentQueryObject query)
+        public async Task<ActionResult<StudentResDto>> Get([FromQuery] StudentQueryObject query)
         {
             var students = await _service.Get(query);
-            return students;
+            return Ok(students);
         }
 
         [HttpGet("{id}")]
-        public async Task<StudentDto> GetById(int id)
+        public async Task<ActionResult<StudentDto>> GetById(int id)
         {
             var student = await _service.GetById(id);
             if(student == null)
             {
                 //implement not found
-                return null;
+                return NotFound();
             }
-            return student;
+            return Ok(student);
         }
 
         [HttpPost]
-        public async Task<StudentDto> Create([FromBody] CreateStudentInput input)
+        public async Task<ActionResult<StudentDto>> Create([FromBody] CreateStudentInput input)
         {
             var student = await _service.Post(input);
             if(student == null)
@@ -42,7 +42,8 @@ namespace SchoolApplication.src.Controllers
                 //implement bad req
                 return null;
             }
-            return await GetById(student.Id);
+            var created = await GetById(student.Id);
+            return created;
         }
 
         [HttpDelete("{id}")]
@@ -53,5 +54,7 @@ namespace SchoolApplication.src.Controllers
                 return NoContent();
             return BadRequest();
         }
+
+
     }
 }

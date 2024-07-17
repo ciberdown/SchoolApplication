@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Dtos.School;
 using SchoolApplication.src.Dtos.Student;
@@ -15,6 +16,25 @@ namespace SchoolApplication.src.Services.SchoolAppService
         {
             _repo = repo;
             _mapper = mapper;
+        }
+
+        public async Task<SchoolDto?> Create(CreateSchoolInput input)
+        {
+            School newSchool = _mapper.Map<School>(input);
+
+
+            School? school = await _repo.Create(newSchool);
+            if (school == null)
+                return null;
+            SchoolDto? created = _mapper.Map<SchoolDto>(school);
+            return created;
+
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var res = await _repo.Delete(id);
+            return res;
         }
 
         public async Task<SchoolResDto> Get(SchoolQueryObject query)

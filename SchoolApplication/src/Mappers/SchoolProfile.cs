@@ -15,6 +15,8 @@ namespace SchoolApplication.src.Mappers
             CreateMap<Student, StudentDto>();
             CreateMap<Course, CourseDto>();
             CreateMap<Scholarship, NoRelationScholarshipDto>();
+
+            CreateMap<CreateSchoolInput, School>();
         }
     }
 }
