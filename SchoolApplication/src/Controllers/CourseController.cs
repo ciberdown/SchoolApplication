@@ -34,5 +34,23 @@ namespace SchoolApplication.src.Controllers
             return course;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var res = await _service.Delete(id);
+            if (res == true)
+                return NoContent();
+            return BadRequest();
+        }
+
+        [HttpPost]
+        public async Task<CourseDto> Create([FromBody] CreateCourseInput input)
+        {
+            CourseDto? created = await _service.Create(input);
+            if (created == null)
+                return null;
+            return created;
+        }
+
     }
 }

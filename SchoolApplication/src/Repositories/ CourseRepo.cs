@@ -37,7 +37,29 @@ namespace SchoolApplication.src.Repositories
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        
+        public async Task<bool> Delete(int id)
+        {
+            var res = await _context.Courses.FindAsync(id);
+            if(res == null)
+                return false;
+            _context.Remove(res);
+            await _context.SaveChangesAsync();
+            return true;
+
+        }
+
+
+        public async Task<Course?> Create(Course course)
+        {
+            var res = await _context.Courses.AddAsync(course);
+            if(res == null)
+                return null;
+
+            await _context.SaveChangesAsync();
+            return course;
+        }
+
+
 
 
         protected IQueryable<Course> ApplyFilters(IQueryable<Course> res, CourseQueryObject query)
@@ -55,5 +77,6 @@ namespace SchoolApplication.src.Repositories
 
             return res;
         }
+
     }
 }

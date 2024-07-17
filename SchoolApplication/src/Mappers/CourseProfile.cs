@@ -13,11 +13,14 @@ namespace SchoolApplication.src.Mappers
     {
         public CourseProfile()
         {
+            CreateMap<Course, CourseDto>();
+
             CreateMap<StudentCourse, SCWithoutCourseDto>();
             CreateMap<School, SchoolWithoutCourseDto>();
             CreateMap<Student, NoRelationStudentDto>();
             CreateMap<Course, NoRelationCourseDto>();
             CreateMap<Scholarship, NoRelationScholarshipDto>();
+            CreateMap<CreateCourseInput, Course>();
             
         }
     }

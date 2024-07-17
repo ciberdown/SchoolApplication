@@ -11,6 +11,8 @@ namespace SchoolApplication.src.Interfaces
     {
         public IQueryable<Course> Get(CourseQueryObject query);
         public Task<Course?> GetById(int id);
+        public Task<bool> Delete(int  id);
+        public Task<Course?> Create(Course course);
 
     }
 }

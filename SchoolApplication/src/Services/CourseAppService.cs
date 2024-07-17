@@ -31,6 +31,7 @@ namespace SchoolApplication.src.Services
                 TotalCount = count,
                 Items = _mapper.Map<List<CourseDto>>(pagedCourses)
             };
+            var Items = _mapper.Map<List<CourseDto>>(pagedCourses);
 
             //return standard res
             return studentResDto;
@@ -47,6 +48,23 @@ namespace SchoolApplication.src.Services
             return courseDto;
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            bool res = await _repo.Delete(id);
+            return res;
+        }
+
+        public async Task<CourseDto?> Create(CreateCourseInput input)
+        {
+            Course course = _mapper.Map<Course>(input);
+            Course? created = await _repo.Create(course);
+            if (created == null)
+                return null;
+            CourseDto createdCourseDto = _mapper.Map<CourseDto>(created);
+            return createdCourseDto;
+        }
+
+
         protected async Task<int> GetCountAsync(IQueryable<Course> query)
         {
             return await query.GetCountAsync();
@@ -56,6 +74,7 @@ namespace SchoolApplication.src.Services
         {
             return await query.GetPagedAsync(paginationQueryObject);
         }
+
 
     }
 }

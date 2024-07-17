@@ -6,6 +6,9 @@ namespace SchoolApplication.src.Interfaces
     {
         public Task<CourseResDto> Get(CourseQueryObject qeury);
         public Task<CourseDto?> GetById(int id);
+        public Task<bool> Delete(int id);
+
+        public Task<CourseDto?> Create(CreateCourseInput input);
 
     }
 }
