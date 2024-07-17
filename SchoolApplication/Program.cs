@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using SchoolApplication.src.Data;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Repositories.CourseRepo;
+using SchoolApplication.src.Repositories.SchoolRepo;
 using SchoolApplication.src.Repositories.StudentRepo;
 using SchoolApplication.src.Services.CourseAppService;
+using SchoolApplication.src.Services.SchoolAppService;
 using SchoolApplication.src.Services.StudentAppService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,9 @@ builder.Services.AddScoped<IStudentRepo, StudentRepo>();
 builder.Services.AddScoped<IStudentAppService, StudentAppService>();
 builder.Services.AddScoped<ICourseRepo, CourseRepo>();
 builder.Services.AddScoped<ICourseAppService, CourseAppService>();
+builder.Services.AddScoped<ISchoolAppService, SchoolAppService>();
+builder.Services.AddScoped<ISchoolRepo, SchoolRepo>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
