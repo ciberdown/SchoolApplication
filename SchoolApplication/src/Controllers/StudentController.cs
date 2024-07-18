@@ -25,12 +25,7 @@ namespace SchoolApplication.src.Controllers
         public async Task<ActionResult<StudentDto>> GetById(int id)
         {
             var student = await _service.GetById(id);
-            if(student == null)
-            {
-                //implement not found
-                return NotFound();
-            }
-            return Ok(student);
+            return student == null ? NotFound() : Ok(student);
         }
 
         [HttpPost]
@@ -50,9 +45,7 @@ namespace SchoolApplication.src.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var res = await _service.Delete(id);
-            if(res == true)
-                return NoContent();
-            return BadRequest();
+            return res == true ? NoContent() : BadRequest();
         }
 
 
