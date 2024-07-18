@@ -7,8 +7,12 @@ using SchoolApplication.src.Repositories.StudentRepo;
 using SchoolApplication.src.Services.CourseAppService;
 using SchoolApplication.src.Services.SchoolAppService;
 using SchoolApplication.src.Services.StudentAppService;
+using DotNetEnv;
+
 
 var builder = WebApplication.CreateBuilder(args);
+Env.Load();
+
 
 // Add services to the container.
 
@@ -29,7 +33,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 //Add DbContext
-var connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
+//var connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
 builder.Services.AddDbContext<SchoolDb>(options => {
         options.UseSqlServer(connectionString);
 });
