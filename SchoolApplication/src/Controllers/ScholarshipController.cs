@@ -40,11 +40,18 @@ namespace SchoolApplication.src.Controllers
         [HttpPost]
         public async Task<ActionResult<ScholarshipDto>> Create([FromBody] CreateScholarshipDto input)
         {
-            Scholarship? res = await _service.Create(input);
-            if(res == null)
-                return NotFound();
-            var created = await GetById(res.AimSchoolId, res.StudentId);
-            return created == null ? NotFound() : created;
+            try
+            {
+                Scholarship? res = await _service.Create(input);
+                if(res == null)
+                    return NotFound();
+                var created = await GetById(res.AimSchoolId, res.StudentId);
+                return created == null ? NotFound() : created;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("${AimSchoolId}/${StudentId}")]

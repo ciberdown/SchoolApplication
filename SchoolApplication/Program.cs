@@ -8,6 +8,8 @@ using SchoolApplication.src.Services.CourseAppService;
 using SchoolApplication.src.Services.SchoolAppService;
 using SchoolApplication.src.Services.StudentAppService;
 using DotNetEnv;
+using SchoolApplication.Repositories.StudentCourseRepo;
+using SchoolApplication.Services.StudentCourseAppService;
 using SchoolApplication.src.Services.ScholarshipAppService;
 using SchoolApplication.src.Repositories.ScholarshipRepo;
 
@@ -27,6 +29,8 @@ builder.Services.AddScoped<ISchoolAppService, SchoolAppService>();
 builder.Services.AddScoped<ISchoolRepo, SchoolRepo>();
 builder.Services.AddScoped<IScholarshipRepo, ScholarshipRepo>();
 builder.Services.AddScoped<IScholarshipAppService, ScholarshipAppService>();
+builder.Services.AddScoped<IStudentCourseAppService, StudentCourseAppService>();
+builder.Services.AddScoped<IStudentCourseRepo, StudentCourseRepo>();
 
 
 builder.Services.AddControllers();

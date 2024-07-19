@@ -10,6 +10,8 @@ namespace SchoolApplication.src.Data
         public DbSet<School> Schools { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        
+        public DbSet<StudentCourse> StudentCourses { get; set; }
 
         public SchoolDb(DbContextOptions options) : base(options){}
 

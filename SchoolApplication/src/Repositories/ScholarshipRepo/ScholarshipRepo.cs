@@ -55,6 +55,12 @@ namespace SchoolApplication.src.Repositories.ScholarshipRepo
 
         public async Task<Scholarship?> Create(Scholarship scholarship)
         {
+            if (await _context.Students.FindAsync(scholarship.StudentId) == null)
+                throw new Exception($"Student with id {scholarship.StudentId} not found!");
+            
+            if (await _context.Schools.FindAsync(scholarship.AimSchoolId) == null)
+                throw new Exception($"School with id {scholarship.AimSchoolId} not found!");
+            
             var res = await _context.Scholarships
                 .AddAsync(scholarship);
 
