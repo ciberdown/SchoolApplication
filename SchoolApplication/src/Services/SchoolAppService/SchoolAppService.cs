@@ -5,6 +5,7 @@ using SchoolApplication.src.Dtos.School;
 using SchoolApplication.src.Dtos.Student;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Models;
+using System.Diagnostics;
 
 namespace SchoolApplication.src.Services.SchoolAppService
 {
@@ -39,17 +40,25 @@ namespace SchoolApplication.src.Services.SchoolAppService
 
         public async Task<SchoolResDto> Get(SchoolQueryObject query)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             IQueryable<School> res = _repo.Get(query);
 
             int count = await GetCountAsync(res);
 
             //then get filtered items paged list
             var pagedSchools = await GetPagedSchoolAsync(res, query);
+            var items = _mapper.Map<List<SchoolDto>>(pagedSchools);
+
+            stopwatch.Stop();
+            String excutionDuration = stopwatch.Elapsed.TotalSeconds + " sec";
 
             var SchoolResDto = new SchoolResDto
             {
                 TotalCount = count,
-                Items = _mapper.Map<List<SchoolDto>>(pagedSchools)
+                ExcutionDuration = excutionDuration,
+                Items = items
             };
 
             //return standard res

@@ -3,6 +3,7 @@
     public abstract class ResDtoBase<T>
     {
         public int TotalCount { get; set; }
+        public string? ExcutionDuration { get; set; }
         public IEnumerable<T> Items { get; set; } = null!;
     }
 }

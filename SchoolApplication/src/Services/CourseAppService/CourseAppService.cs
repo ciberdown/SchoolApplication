@@ -3,6 +3,7 @@ using SchoolApplication.src.Dtos;
 using SchoolApplication.src.Dtos.Course;
 using SchoolApplication.src.Interfaces;
 using SchoolApplication.src.Models;
+using System.Diagnostics;
 
 namespace SchoolApplication.src.Services.CourseAppService
 {
@@ -19,19 +20,27 @@ namespace SchoolApplication.src.Services.CourseAppService
 
         public async Task<CourseResDto> Get(CourseQueryObject query)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             IQueryable<Course> res = _repo.Get(query);
             //get all items count before apply pagination
             int count = await GetCountAsync(res);
 
             //then get filtered items paged list
             var pagedCourses = await GetPagedStudentsAsync(res, query);
+            var items = _mapper.Map<List<CourseDto>>(pagedCourses);
+
+            stopwatch.Stop();
+            String excutionDuration = stopwatch.Elapsed.TotalSeconds + " sec";
+
 
             var studentResDto = new CourseResDto
             {
                 TotalCount = count,
-                Items = _mapper.Map<List<CourseDto>>(pagedCourses)
+                ExcutionDuration = excutionDuration,
+                Items = items
             };
-            var Items = _mapper.Map<List<CourseDto>>(pagedCourses);
 
             //return standard res
             return studentResDto;

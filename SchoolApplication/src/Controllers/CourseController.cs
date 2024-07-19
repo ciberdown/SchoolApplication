@@ -26,12 +26,7 @@ namespace SchoolApplication.src.Controllers
         public async Task<ActionResult<CourseDto?>> GetById(int id)
         {
             CourseDto? course = await _service.GetById(id);
-            if(course == null)
-            {
-                //implement not found
-                return NotFound();
-            }
-            return Ok(course);
+            return course == null ? NotFound() : Ok(course);
         }
 
         [HttpDelete("{id}")]
@@ -47,9 +42,7 @@ namespace SchoolApplication.src.Controllers
         public async Task<ActionResult<CourseDto?>> Create([FromBody] CreateCourseInput input)
         {
             CourseDto? created = await _service.Create(input);
-            if (created == null)
-                return BadRequest();
-            return Ok(created);
+            return created == null ? BadRequest() : Ok(created);
         }
 
     }

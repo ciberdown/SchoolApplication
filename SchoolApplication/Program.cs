@@ -7,8 +7,14 @@ using SchoolApplication.src.Repositories.StudentRepo;
 using SchoolApplication.src.Services.CourseAppService;
 using SchoolApplication.src.Services.SchoolAppService;
 using SchoolApplication.src.Services.StudentAppService;
+using DotNetEnv;
+using SchoolApplication.src.Services.ScholarshipAppService;
+using SchoolApplication.src.Repositories.ScholarshipRepo;
+
 
 var builder = WebApplication.CreateBuilder(args);
+Env.Load();
+
 
 // Add services to the container.
 
@@ -19,6 +25,8 @@ builder.Services.AddScoped<ICourseRepo, CourseRepo>();
 builder.Services.AddScoped<ICourseAppService, CourseAppService>();
 builder.Services.AddScoped<ISchoolAppService, SchoolAppService>();
 builder.Services.AddScoped<ISchoolRepo, SchoolRepo>();
+builder.Services.AddScoped<IScholarshipRepo, ScholarshipRepo>();
+builder.Services.AddScoped<IScholarshipAppService, ScholarshipAppService>();
 
 
 builder.Services.AddControllers();
@@ -29,11 +37,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 //Add DbContext
-const string connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
-const string azureConnectionStirng =
-    "Server=localhost;Database=SchoolDb;User Id=SA;Password=Amin389278200;TrustServerCertificate=True;Encrypt=False;";
+//var connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
 builder.Services.AddDbContext<SchoolDb>(options => {
-        options.UseSqlServer(azureConnectionStirng);
+        options.UseSqlServer(connectionString);
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
