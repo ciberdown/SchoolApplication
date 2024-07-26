@@ -48,7 +48,7 @@ var connectionType = Environment.GetEnvironmentVariable("ConnectionType");
 if (connectionType == "Sqlite")
     builder.Services.AddDbContext<SchoolDb>(options =>
     {
-        options.UseSqlite("Data Source=/Users/aminteymuri/Desktop/MyApiDatabase.db");
+        options.UseSqlite(connectionString);
     });
     
 if(connectionType == "SSMS")
