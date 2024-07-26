@@ -43,9 +43,18 @@ builder.Services.AddControllers();
 //Add DbContext
 //var connectionString = "Server=(localdb)\\Local;Database=SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;";
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
-builder.Services.AddDbContext<SchoolDb>(options => {
-        options.UseSqlServer(connectionString);
-});
+var connectionType = Environment.GetEnvironmentVariable("ConnectionType");
+
+if (connectionType == "Sqlite")
+    builder.Services.AddDbContext<SchoolDb>(options =>
+    {
+        options.UseSqlite("Data Source=/Users/aminteymuri/Desktop/MyApiDatabase.db");
+    });
+    
+if(connectionType == "SSMS")
+    builder.Services.AddDbContext<SchoolDb>(options => {
+            options.UseSqlServer(connectionString);
+    });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
